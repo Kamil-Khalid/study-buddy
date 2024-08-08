@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Buddy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reset default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Basic styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: #333;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background: #333;
+            color: #f1f1f1;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 1rem;
+        }
+
+        /* Header styles */
+        header {
+            background: #fff;
+            color: #333;
+            padding: 1rem 0;
+            text-align: center;
+            animation: fadeInDown 1s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        header.dark-mode {
+            background: #444;
+            color: #f1f1f1;
+        }
+
+        header h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0.5rem;
+        }
+
+        nav ul li a {
+            color: inherit;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ff7e5f;
+        }
+
+        .dark-mode-toggle {
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Main content styles */
+        main {
+            padding: 2rem 0;
+        }
+
+        section {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s ease-in-out;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        section.dark-mode {
+            background: #444;
+            color: #f1f1f1;
+        }
+
+        section h2 {
+            margin-bottom: 1rem;
+            font-size: 2rem;
+            color: #ff7e5f;
+            transition: color 0.3s ease;
+        }
+
+        section.dark-mode h2 {
+            color: #feb47b;
+        }
+
+        label {
+            display: block;
+            margin: 0.5rem 0 0.2rem;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        input[type="password"],
+        button {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: background 0.3s, border 0.3s;
+        }
+
+        body.dark-mode input[type="text"],
+        body.dark-mode input[type="date"],
+        body.dark-mode input[type="email"],
+        body.dark-mode input[type="password"] {
+            background: #555;
+            border: 1px solid #666;
+            color: #f1f1f1;
+        }
+
+        button {
+            background: #ff7e5f;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background: #feb47b;
+            transform: translateY(-2px);
+        }
+
+        /* Feature styles */
+        .features {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .feature {
+            flex: 1;
+            margin: 1rem;
+            text-align: center;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature i {
+            font-size: 3rem;
+            color: #ff7e5f;
+            margin-bottom: 1rem;
+        }
+
+        body.dark-mode .feature {
+            background: #555;
+        }
+
+        /* Footer styles */
+        footer {
+            background: #ff7e5f;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Flashcard, quiz, and other item styles */
+        .flashcard,
+        .quiz-item,
+        .homework-item,
+        .message-item,
+        .resource-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: background 0.3s, border 0.3s;
+        }
+
+        body.dark-mode .flashcard,
+        body.dark-mode .quiz-item,
+        body.dark-mode .homework-item,
+        body.dark-mode .message-item,
+        body.dark-mode .resource-item {
+            background: #555;
+            border: 1px solid #666;
+        }
+
+        /* Resource section styles */
+        .resource-form {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .resource-form input {
+            flex: 1;
+            margin-right: 0.5rem;
+        }
+
+        .resource-form button {
+            flex-basis: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Study Buddy</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#study-plan">Study Plan</a></li>
+                    <li><a href="#flashcards">Flashcards</a></li>
+                    <li><a href="#quizzes">Quizzes</a></li>
+                    <li><a href="#homework">Homework</a></li>
+                    <li><a href="#collaborate">Collaborate</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="https://study-budd.tiiny.site">Contact Us</a></li>
+                    <li class="dark-mode-toggle"><i class="fas fa-moon"></i></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section id="home">
+            <div class="container">
+                <h2>Welcome to Study Buddy</h2>
+                <p>Your ultimate study companion!</p>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-book"></i>
+                        <h3>Personalized Study Plans</h3>
+                        <p>Create custom study schedules tailored to your needs.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Interactive Flashcards</h3>
+                        <p>Create, edit, and review flashcards to enhance learning.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-clipboard-check"></i>
+                        <h3>Real-Time Quizzes</h3>
+                        <p>Test your knowledge with dynamic quizzes.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-tasks"></i>
+                        <h3>Homework Tracker</h3>
+                        <p>Keep track of your assignments and due dates.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-users"></i>
+                        <h3>Collaboration Space</h3>
+                        <p>Share ideas and study tips with peers.</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-link"></i>
+                        <h3>Resource Library</h3>
+                        <p>Access a curated list of study resources.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="study-plan">
+            <div class="container">
+                <h2>Study Plan</h2>
+                <form id="study-plan-form">
+                    <label for="subject">Subject:</label>
+                    <input type="text" id="subject" name="subject" required>
+                    <label for="topic">Topic:</label>
+                    <input type="text" id="topic" name="topic" required>
+                    <label for="date">Exam Date:</label>
+                    <input type="date" id="date" name="date" required>
+                    <button type="submit">Create Study Plan</button>
+                </form>
+                <div id="plan-output"></div>
+            </div>
+        </section>
+        <section id="flashcards">
+            <div class="container">
+                <h2>Flashcards</h2>
+                <form id="flashcard-form">
+                    <label for="question">Question:</label>
+                    <input type="text" id="question" name="question" required>
+                    <label for="answer">Answer:</label>
+                    <input type="text" id="answer" name="answer" required>
+                    <button type="submit">Add Flashcard</button>
+                </form>
+                <div id="flashcards-output"></div>
+            </div>
+        </section>
+        <section id="quizzes">
+            <div class="container">
+                <h2>Quizzes</h2>
+                <form id="quiz-form">
+                    <label for="quiz-question">Question:</label>
+                    <input type="text" id="quiz-question" name="quiz-question" required>
+                    <label for="quiz-answer">Answer:</label>
+                    <input type="text" id="quiz-answer" name="quiz-answer" required>
+                    <button type="submit">Add Quiz</button>
+                </form>
+                <div id="quiz-output"></div>
+            </div>
+        </section>
+        <section id="homework">
+            <div class="container">
+                <h2>Homework Tracker</h2>
+                <form id="homework-form">
+                    <label for="homework-task">Task:</label>
+                    <input type="text" id="homework-task" name="homework-task" required>
+                    <label for="homework-due-date">Due Date:</label>
+                    <input type="date" id="homework-due-date" name="homework-due-date" required>
+                    <button type="submit">Add Homework</button>
+                </form>
+                <div id="homework-output"></div>
+            </div>
+        </section>
+        <section id="collaborate">
+            <div class="container">
+                <h2>Collaboration Space</h2>
+                <form id="collaborate-form">
+                    <label for="collaborate-message">Message:</label>
+                    <input type="text" id="collaborate-message" name="collaborate-message" required>
+                    <button type="submit">Send Message</button>
+                </form>
+                <div id="collaborate-output"></div>
+            </div>
+        </section>
+        <section id="resources">
+            <div class="container">
+                <h2>Study Resources</h2>
+                <form id="resource-form" class="resource-form">
+                    <input type="text" id="resource-title" name="resource-title" placeholder="Resource Title" required>
+                    <input type="url" id="resource-link" name="resource-link" placeholder="Resource URL" required>
+                    <button type="submit">Add Resource</button>
+                </form>
+                <div id="resource-output"></div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Study Buddy. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Dark Mode Toggle
+            const darkModeToggle = document.querySelector('.dark-mode-toggle');
+            darkModeToggle.addEventListener('click', function () {
+                document.body.classList.toggle('dark-mode');
+                document.querySelectorAll('header, section').forEach(el => el.classList.toggle('dark-mode'));
+            });
+
+            // Study Plan Form Submission
+            document.getElementById('study-plan-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const subject = document.getElementById('subject').value;
+                const topic = document.getElementById('topic').value;
+                const date = document.getElementById('date').value;
+                const output = document.getElementById('plan-output');
+                output.innerHTML = `<h3>Your Study Plan for ${subject}</h3><p>Topic: ${topic}</p><p>Exam Date: ${date}</p>`;
+                this.reset();
+            });
+
+            // Flashcard Form Submission
+            document.getElementById('flashcard-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const question = document.getElementById('question').value;
+                const answer = document.getElementById('answer').value;
+                const output = document.getElementById('flashcards-output');
+                const card = document.createElement('div');
+                card.classList.add('flashcard');
+                card.innerHTML = `<p>Q: ${question}</p><p>A: ${answer}</p>`;
+                output.appendChild(card);
+                this.reset();
+            });
+
+            // Quiz Form Submission
+            document.getElementById('quiz-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const question = document.getElementById('quiz-question').value;
+                const answer = document.getElementById('quiz-answer').value;
+                const output = document.getElementById('quiz-output');
+                const quizItem = document.createElement('div');
+                quizItem.classList.add('quiz-item');
+                quizItem.innerHTML = `<p>Q: ${question}</p><p>A: ${answer}</p>`;
+                output.appendChild(quizItem);
+                this.reset();
+            });
+
+            // Homework Form Submission
+            document.getElementById('homework-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const task = document.getElementById('homework-task').value;
+                const dueDate = document.getElementById('homework-due-date').value;
+                const output = document.getElementById('homework-output');
+                const homeworkItem = document.createElement('div');
+                homeworkItem.classList.add('homework-item');
+                homeworkItem.innerHTML = `<p>Task: ${task}</p><p>Due Date: ${dueDate}</p>`;
+                output.appendChild(homeworkItem);
+                this.reset();
+            });
+
+            // Collaboration Form Submission
+            document.getElementById('collaborate-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const message = document.getElementById('collaborate-message').value;
+                const output = document.getElementById('collaborate-output');
+                const messageItem = document.createElement('div');
+                messageItem.classList.add('message-item');
+                messageItem.innerHTML = `<p>${message}</p>`;
+                output.appendChild(messageItem);
+                this.reset();
+            });
+
+            // Resource Form Submission
+            document.getElementById('resource-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const title = document.getElementById('resource-title').value;
+                const link = document.getElementById('resource-link').value;
+                const output = document.getElementById('resource-output');
+                const resourceItem = document.createElement('div');
+                resourceItem.classList.add('resource-item');
+                resourceItem.innerHTML = `<h4>${title}</h4><a href="${link}" target="_blank">${link}</a>`;
+                output.appendChild(resourceItem);
+                this.reset();
+            });
+        });
+    </script>
+</body>
+
+</html>
